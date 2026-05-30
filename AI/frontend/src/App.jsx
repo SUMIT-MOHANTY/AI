@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
+import { Routes, Route } from 'react-router-dom'
 
 // Import page views
 import Home from "./pages/Home";
@@ -34,20 +35,20 @@ export default function App() {
   }, []);
 
   // Custom Page Switch router mapping
-  const renderCurrentPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <Home navigate={navigate} onSearchClick={() => setIsSearchOpen(true)} />;
-      case "category":
-        return <Category params={currentParams} navigate={navigate} />;
-      case "topic":
-        return <Topic params={currentParams} navigate={navigate} />;
-      case "about":
-        return <About navigate={navigate} />;
-      default:
-        return <Home navigate={navigate} onSearchClick={() => setIsSearchOpen(true)} />;
-    }
-  };
+  // const renderCurrentPage = () => {
+  //   switch (currentPage) {
+  //     case "home":
+  //       return <Home navigate={navigate} onSearchClick={() => setIsSearchOpen(true)} />;
+  //     case "category":
+  //       return <Category params={currentParams} navigate={navigate} />;
+  //     case "topic":
+  //       return <Topic params={currentParams} navigate={navigate} />;
+  //     case "about":
+  //       return <About navigate={navigate} />;
+  //     default:
+  //       return <Home navigate={navigate} onSearchClick={() => setIsSearchOpen(true)} />;
+  //   }
+  // };
 
   return (
     <>
@@ -73,7 +74,7 @@ export default function App() {
 
       {/* Primary Shell Container */}
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", position: "relative", zIndex: 2 }}>
-        
+
         {/* Floating Navbar */}
         <Navbar
           currentPage={currentPage}
@@ -83,9 +84,32 @@ export default function App() {
 
         {/* Dynamic Route Content Wrapper */}
         <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          {renderCurrentPage()}
-        </main>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  onSearchClick={() => setIsSearchOpen(true)}
+                />
+              }
+            />
 
+            <Route
+              path="/about"
+              element={<About />}
+            />
+
+            <Route
+              path="/category/:id"
+              element={<Category />}
+            />
+
+            <Route
+              path="/topic/:id"
+              element={<Topic />}
+            />
+          </Routes>
+        </main>
         {/* Global Modal Search Overlay */}
         <SearchBar
           isOpen={isSearchOpen}

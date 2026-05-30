@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Terminal, Github, Twitter, Cpu, CheckCircle } from "lucide-react";
 
-export default function Footer({ navigate }) {
+
+import { useNavigate } from "react-router-dom";
+export default function Footer() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -43,7 +46,7 @@ export default function Footer({ navigate }) {
                 gap: "0.75rem",
                 cursor: "pointer",
               }}
-              onClick={() => navigate("home")}
+              onClick={() => navigate("/about")}
             >
               <div
                 style={{
@@ -198,7 +201,7 @@ export default function Footer({ navigate }) {
         >
           <span>© {new Date().getFullYear()} NeuraLearn Platform. Built for scientific clarity.</span>
           <div style={{ display: "flex", gap: "1.5rem" }}>
-            <span style={{ cursor: "pointer" }} onClick={() => navigate("about")}>System Core Specs</span>
+            <span style={{ cursor: "pointer" }} >System Core Specs</span>
             <span>Security Nodes</span>
             <span>Academic Licensing</span>
           </div>

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { ChevronLeft, Calendar, Clock, BarChart2, BookOpen, ArrowRight } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function Category({ params, navigate }) {
+export default function Category() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +15,7 @@ export default function Category({ params, navigate }) {
       setLoading(true);
       setError(null);
       try {
-        const data = await api.getCategoryById(params.id);
+        const data = await api.getCategoryById(id);
         setCategory(data);
       } catch (err) {
         console.error(err);
@@ -22,7 +25,7 @@ export default function Category({ params, navigate }) {
       }
     };
     fetchCategory();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -57,7 +60,7 @@ export default function Category({ params, navigate }) {
     return (
       <div className="container" style={{ padding: "4rem 0", textAlign: "center" }}>
         <h3>Error: {error || "Index not found."}</h3>
-        <button onClick={() => navigate("home")} className="btn btn-primary" style={{ marginTop: "1rem" }}>
+        <button onClick={() => navigate("/")} className="btn btn-primary" style={{ marginTop: "1rem" }}>
           Return Home
         </button>
       </div>
@@ -75,7 +78,7 @@ export default function Category({ params, navigate }) {
       <div className="container">
         {/* Breadcrumb Back Navigation */}
         <button
-          onClick={() => navigate("home")}
+          onClick={() => navigate("/")}
           style={{
             background: "none",
             border: "none",
@@ -204,7 +207,7 @@ export default function Category({ params, navigate }) {
               {category.topics.map((topic) => (
                 <div
                   key={topic.id}
-                  onClick={() => navigate("topic", { categoryId: category.id, topicId: topic.id })}
+                  onClick={() => navigate(`/topic/${topic.id}`)}
                   className="glass-panel"
                   style={{
                     padding: "1.75rem",

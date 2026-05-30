@@ -1,7 +1,9 @@
 import React from "react";
 import { Sparkles, BookOpen, Eye, Cpu, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-export default function CategoryCard({ category, navigate }) {
+export default function CategoryCard({ category }) {
+  const navigate = useNavigate();
   const getIcon = (iconName) => {
     switch (iconName) {
       case "Sparkles":
@@ -19,7 +21,7 @@ export default function CategoryCard({ category, navigate }) {
 
   return (
     <div
-      onClick={() => navigate("category", { id: category.id })}
+      onClick={() => navigate(`/category/${category.id}`)}
       className="glass-panel glass-panel-hover"
       style={{
         padding: "2rem",

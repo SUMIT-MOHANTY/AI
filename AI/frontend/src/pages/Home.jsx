@@ -3,8 +3,10 @@ import { api } from "../services/api";
 import Hero from "../components/Hero";
 import CategoryCard from "../components/CategoryCard";
 import { Loader, Layers } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-export default function Home({ navigate, onSearchClick }) {
+export default function Home({ onSearchClick }) {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 

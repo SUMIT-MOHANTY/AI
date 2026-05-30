@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, X, Loader, CornerDownLeft, Sparkles, BookOpen, Eye, Cpu } from "lucide-react";
 import { api } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar({ isOpen, onClose, navigate }) {
+export default function SearchBar({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -76,7 +78,7 @@ export default function SearchBar({ isOpen, onClose, navigate }) {
 
   const handleSelect = (item) => {
     onClose();
-    navigate("topic", { categoryId: item.categoryId, topicId: item.topicId });
+    navigate(`/topic/${item.topicId}`);
   };
 
   const getCategoryIcon = (iconName) => {

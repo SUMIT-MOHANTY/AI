@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { ChevronLeft, ChevronRight, Play, Terminal, BookOpen, Check, Award, Cpu } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function Topic({ params, navigate }) {
+export default function Topic() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [topic, setTopic] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +19,7 @@ export default function Topic({ params, navigate }) {
       setLoading(true);
       setError(null);
       try {
-        const data = await api.getTopicById(params.categoryId, params.topicId);
+        const data = await api.getTopicById(id);
         setTopic(data);
         setActiveTab("code");
         setExecutionResult("");
@@ -28,7 +31,7 @@ export default function Topic({ params, navigate }) {
       }
     };
     fetchTopic();
-  }, [params.categoryId, params.topicId]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -64,7 +67,7 @@ export default function Topic({ params, navigate }) {
       <div className="container" style={{ padding: "4rem 0", textAlign: "center" }}>
         <h3>Error: {error || "Topic index missing."}</h3>
         <button
-          onClick={() => navigate("category", { id: params.categoryId })}
+          onClick={() => navigate(-1)}
           className="btn btn-primary"
           style={{ marginTop: "1rem" }}
         >
@@ -215,7 +218,7 @@ export default function Topic({ params, navigate }) {
       <div className="container">
         {/* Back Link */}
         <button
-          onClick={() => navigate("category", { id: topic.categoryId })}
+          onClick={() => navigate(`/category/${topic.categoryId}`)}
           style={{
             background: "none",
             border: "none",

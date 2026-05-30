@@ -20,11 +20,25 @@ export const api = {
   // Fetch specific topic under category
   async getTopicById(categoryId, topicId) {
     await delay(200);
-    const category = categories.find((cat) => cat.id === categoryId);
-    if (!category) throw new Error(`Category ${categoryId} not found`);
-    const topic = category.topics.find((top) => top.id === topicId);
-    if (!topic) throw new Error(`Topic ${topicId} not found`);
-    return { ...topic, categoryId, categoryTitle: category.title, categoryColor: category.color };
+    let finalCategoryId = categoryId;
+    let finalTopicId = topicId;
+
+    if (!topicId) {
+      // Single argument lookup fallback
+      const foundCategory = categories.find((cat) =>
+        cat.topics.some((top) => top.id === categoryId)
+      );
+      if (foundCategory) {
+        finalCategoryId = foundCategory.id;
+        finalTopicId = categoryId;
+      }
+    }
+
+    const category = categories.find((cat) => cat.id === finalCategoryId);
+    if (!category) throw new Error(`Category ${finalCategoryId} not found`);
+    const topic = category.topics.find((top) => top.id === finalTopicId);
+    if (!topic) throw new Error(`Topic ${finalTopicId} not found`);
+    return { ...topic, categoryId: finalCategoryId, categoryTitle: category.title, categoryColor: category.color };
   },
 
   // Fuzzy-find matching topics or categories

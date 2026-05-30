@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Terminal, Search, Menu, X, Sparkles, BookOpen, Eye, Cpu, HelpCircle } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Navbar({ currentPage, navigate, onSearchClick }) {
+export default function Navbar({ onSearchClick }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const currentPage = location.pathname === "/" ? "home" : "";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,8 +23,8 @@ export default function Navbar({ currentPage, navigate, onSearchClick }) {
   }, []);
 
   const navItems = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "System Specs" },
+    { path: "/", label: "Home" },
+    { path: "/systems", label: "System Specs" },
   ];
 
   return (
@@ -48,7 +53,7 @@ export default function Navbar({ currentPage, navigate, onSearchClick }) {
       {/* Brand Logo */}
       <div
         onClick={() => {
-          navigate("home");
+          navigate("/");
           setIsOpen(false);
         }}
         style={{
@@ -98,11 +103,11 @@ export default function Navbar({ currentPage, navigate, onSearchClick }) {
         className="desktop-menu"
       >
         {navItems.map((item) => {
-          const isActive = currentPage === item.id;
+          const isActive = location.pathname === item.path;
           return (
             <button
-              key={item.id}
-              onClick={() => navigate(item.id)}
+              key={item.path}
+              onClick={() => navigate(item.path)}
               style={{
                 background: "none",
                 border: "none",
