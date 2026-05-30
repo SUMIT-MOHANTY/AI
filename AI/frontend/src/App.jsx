@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Category from "./pages/Category";
 import Topic from "./pages/Topic";
 import About from "./pages/About";
+import Systems from "./pages/Systems";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -97,6 +98,11 @@ export default function App() {
             <Route
               path="/about"
               element={<About />}
+            />
+
+            <Route
+              path="/systems"
+              element={<Systems />}
             />
 
             <Route

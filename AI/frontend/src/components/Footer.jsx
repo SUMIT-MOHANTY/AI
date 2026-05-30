@@ -201,7 +201,7 @@ export default function Footer() {
         >
           <span>© {new Date().getFullYear()} NeuraLearn Platform. Built for scientific clarity.</span>
           <div style={{ display: "flex", gap: "1.5rem" }}>
-            <span style={{ cursor: "pointer" }} >System Core Specs</span>
+            <span style={{ cursor: "pointer" }} onClick={() => navigate("/systems")}>System Core Specs</span>
             <span>Security Nodes</span>
             <span>Academic Licensing</span>
           </div>

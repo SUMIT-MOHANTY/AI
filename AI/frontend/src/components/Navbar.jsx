@@ -213,15 +213,15 @@ export default function Navbar({ onSearchClick }) {
         >
           {navItems.map((item) => (
             <button
-              key={item.id}
+              key={item.path}
               onClick={() => {
-                navigate(item.id);
+                navigate(item.path);
                 setIsOpen(false);
               }}
               style={{
                 background: "none",
                 border: "none",
-                color: currentPage === item.id ? "var(--accent)" : "var(--text-main)",
+                color: location.pathname === item.path ? "var(--accent)" : "var(--text-main)",
                 cursor: "pointer",
                 fontFamily: "var(--font-heading)",
                 fontSize: "1.1rem",
