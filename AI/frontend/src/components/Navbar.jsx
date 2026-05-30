@@ -22,6 +22,7 @@ export default function Navbar({ onSearchClick }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/systems", label: "System Specs" },
